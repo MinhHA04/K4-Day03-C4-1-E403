@@ -1,0 +1,15 @@
+flowchart TD
+    A[User question] --> B{Câu hỏi có cần
+triệu chứng / lịch khám / bác sĩ?}
+    B -- Không --> C[Chatbot Baseline]
+    C --> D[Trả lời trực tiếp
+không gọi tool]
+    B -- Có --> E[ReAct Agent]
+    E --> F[assess_symptoms]
+    F --> G[find_doctor]
+    G --> H[suggest_schedule]
+    H --> I{Người dùng xác nhận?
+Lịch còn trống?}
+    I -- Không --> J[Safe fallback / hỏi lại]
+    I -- Có --> K[confirm_booking]
+    K --> L[Final Answer]
