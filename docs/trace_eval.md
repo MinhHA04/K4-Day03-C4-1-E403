@@ -18,21 +18,30 @@
 
 ## 🔍 2. SO SÁNH PHẢN HỒI (TEST CASE #3)
 
-**Câu hỏi**: *"Thời tiết ở Hà Nội hôm nay thế nào và tôi nên mặc gì đi chơi?"*
+**Câu hỏi**: *"Tôi tên An, hay đau đầu chóng mặt buổi sáng, hãy chọn bác sĩ và đặt lịch cho tôi ngày mai lúc 9h, SĐT 0901234567."*
 
 ### 🤖 Chatbot Baseline:
-* **Phản hồi**: *"Tôi không có truy cập Internet thời gian thực nên không biết thời tiết hôm nay ở Hà Nội."*
-* **Nhận xét**: An toàn nhưng không giải quyết được nhu cầu thực tế của người dùng.
+* **Phản hồi**: *"Tôi không có truy cập hệ thống lịch khám thời gian thực. Bạn có thể mô tả thêm triệu chứng để tôi tư vấn chuyên khoa phù hợp."*
+* **Nhận xét**: An toàn nhưng không hoàn thành thao tác đặt lịch cho người dùng.
 
 ### 🧠 ReAct Agent:
-* **Thought 1**: Cần tra cứu thời tiết Hà Nội.
-* **Action 1**: `get_weather['Hà Nội']`
-* **Observation 1**: `Thời tiết Hà Nội: 28°C, Nắng nhẹ, Độ ẩm 65%.`
-* **Thought 2**: Đã có thông tin 28°C nắng nhẹ, đưa ra lời khuyên trang phục.
-* **Final Answer**: *"Thời tiết Hà Nội hôm nay 28°C, nắng nhẹ. Bạn nên mặc quần áo thoáng mát!"*
-* **Nhận xét**: Hoàn thành xuất sắc nhiệm vụ nhờ sự kết hợp giữa suy luận và công cụ.
+* **Thought 1**: Triệu chứng đau đầu chóng mặt buổi sáng gợi ý chuyên khoa Thần kinh.
+* **Action 1**: `assess_symptoms['Tôi tên An, hay đau đầu chóng mặt buổi sáng, hãy chọn bác sĩ và đặt lịch cho tôi ngày mai lúc 9h, SĐT 0901234567.']`
+* **Observation 1**: `Triệu chứng gợi ý chuyên khoa: Thần kinh` ...
+* **Thought 2**: Cần tìm bác sĩ Thần kinh phù hợp.
+* **Action 2**: `find_doctor['Thần kinh', '']`
+* **Observation 2**: `Bác sĩ phù hợp: BS Nguyễn Văn A`
+* **Thought 3**: Có bác sĩ rồi, cần đề xuất lịch khám ngày mai.
+* **Action 3**: `suggest_schedule['BS Nguyễn Văn A', 'ngày mai', '09:00']`
+* **Observation 3**: `Slot đề xuất: 09:00`
+* **Thought 4**: Đã đủ dữ liệu để chốt lịch.
+* **Action 4**: `confirm_booking['BS Nguyễn Văn A', '09:00', 'An', '0901234567', 'ngày mai']`
+* **Observation 4**: `Đã chốt lịch thành công...`
+* **Final Answer**: *"Đã chốt lịch thành công. Mã đặt lịch ... với BS Nguyễn Văn A vào 2026-07-29 09:00."*
+* **Nhận xét**: Agent hoàn thành đúng chuỗi 4 bước và trả về kết quả grounded bằng dữ liệu tool.
 
 ---
+
 ## 3. Các trường hợp tool có thể bị lỗi (Failure Modes)
 
 | Bước | Trường hợp có thể lỗi | Lý do |
