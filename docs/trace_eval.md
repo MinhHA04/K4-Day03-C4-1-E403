@@ -7,13 +7,14 @@
 
 | Tiêu chí | Điểm (1-5) | Lý do đánh giá |
 | :--- | :---: | :--- |
-| 🧠 **Multi-step Reasoning** | `4/5` | Cần suy luận từ tra cứu thời tiết đến chọn trang phục. |
-| 🛠️ **Tool Interaction** | `5/5` | Cần tra cứu dữ liệu thời gian thực qua API thời tiết/chuyến bay. |
-| 🔀 **Dynamic Decision** | `4/5` | Kết quả bước trước quyết định hành động bước sau. |
-| ⏳ **Long Horizon** | `3/5` | Quy trình gồm 2-3 bước xử lý ngắn. |
-| **TỔNG ĐIỂM FIT** | **16/20** | **KẾT LUẬN: BÀI TOÁN RẤT NÊN DÙNG REACT AGENT!** |
+| 🧠 *Multi-step Reasoning* | 5/5 | Cần phân loại triệu chứng, chọn chuyên khoa, dò lịch trống và chốt lịch theo từng bước. |
+| 🛠️ *Tool Interaction* | 5/5 | Cần tích hợp tool tư vấn triệu chứng, tìm bác sĩ, đề xuất lịch và xác nhận đặt lịch. |
+| 🔀 *Dynamic Decision* | 4/5 | Lịch khám thay đổi theo ngày, giờ và dữ liệu đầu vào của người dùng. |
+| ⏳ *Long Horizon* | 5/5 | Quy trình gồm nhiều bước nối tiếp: tư vấn triệu chứng, chọn bác sĩ, đề xuất lịch, chốt lịch. |
+| *TỔNG ĐIỂM FIT* | *19/20* | *KẾT LUẬN: BÀI TOÁN RẤT NÊN DÙNG REACT AGENT!* |
 
 ---
+
 
 ## 🔍 2. SO SÁNH PHẢN HỒI (TEST CASE #3)
 
