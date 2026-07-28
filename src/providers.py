@@ -135,9 +135,23 @@ class MockProvider(BaseLLMProvider):
     """Offline Mock Provider (Cho bài test không cần kết nối API)"""
     def generate(self, prompt: str, system_prompt: str = "") -> str:
         text = prompt.lower()
-        if "thời tiết" in text and "hà nội" in text:
-            return "Thought: Cần tra cứu thời tiết Hà Nội.\nAction: get_weather['Hà Nội']"
-        return "🤖 [Mock Provider]: Phản hồi giả lập offline cho bài test."
+        if "thói quen tốt" in text and "sức khỏe" in text:
+            return (
+                "1. Nghỉ giải lao 5-10 phút sau mỗi 45-60 phút ngồi làm việc.\n"
+                "2. Uống đủ nước và giữ tư thế ngồi đúng.\n"
+                "3. Vận động nhẹ, nhìn xa để giảm mỏi mắt và căng cơ."
+            )
+        if "khi nào" in text and "đi khám" in text:
+            return (
+                "Bạn nên đi khám nếu triệu chứng kéo dài, nặng lên, tái diễn nhiều lần, "
+                "hoặc đi kèm sốt cao, khó thở, đau ngực hay ngất."
+            )
+        if any(keyword in text for keyword in ["đau đầu", "chóng mặt", "đặt lịch", "khám", "triệu chứng"]):
+            return (
+                "Tôi không có truy cập hệ thống lịch khám thời gian thực. "
+                "Bạn có thể mô tả thêm triệu chứng để tôi tư vấn chuyên khoa phù hợp."
+            )
+        return "Tôi có thể trả lời câu hỏi chung hoặc gợi ý bước tiếp theo nếu bạn cần tư vấn thêm."
 
 
 def get_llm_provider(provider_name: str = None) -> BaseLLMProvider:
@@ -145,13 +159,25 @@ def get_llm_provider(provider_name: str = None) -> BaseLLMProvider:
     name = (provider_name or os.getenv("LLM_PROVIDER") or "mock").lower().strip()
     
     if name == "gemini":
-        return GeminiProvider()
+        provider = GeminiProvider()
+        if not provider.api_key or provider.api_key == "your_gemini_api_key_here":
+            return MockProvider()
+        return provider
     elif name == "openai":
-        return OpenAIProvider()
+        provider = OpenAIProvider()
+        if not provider.api_key or provider.api_key == "your_openai_api_key_here":
+            return MockProvider()
+        return provider
     elif name == "anthropic":
-        return AnthropicProvider()
+        provider = AnthropicProvider()
+        if not provider.api_key or provider.api_key == "your_anthropic_api_key_here":
+            return MockProvider()
+        return provider
     elif name == "openrouter":
-        return OpenRouterProvider()
+        provider = OpenRouterProvider()
+        if not provider.api_key or provider.api_key == "your_openrouter_api_key_here":
+            return MockProvider()
+        return provider
     else:
         return MockProvider()
 
